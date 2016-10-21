@@ -31,7 +31,6 @@ env:
 # 
 run:	env
 	($(INVENV) python3 app.py) ||  true
-	#($(INVENV) python3 flask_minijax.py) ||  true
 
 # 'make service' runs as a background job under the gunicorn 
 #  WSGI server. FIXME:  A real production service would use 

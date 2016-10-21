@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+
+        <!-- Bootstrap requires the following three meta tags to appear first -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <!-- Javascript and Cascading Style Sheets (css) libraries -->
+        <!-- mostly from content delivery networks                 -->
+
+        <!-- jquery; CDN load is usually quick because it's likely cached -->
+        <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+        </script>
+
+        <!-- Bootstrap stylesheet let's us have a 'responsive' layout; -->
+        <!-- 12 column grid rearranges itself for smaller screens or windows. -->
+
+        <!-- per http://getbootstrap.com/getting-started/  -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+        crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+ integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+ crossorigin="anonymous">
+</script>
+
+<!-- Our own css file.  Note how we can link directly here and not -->
+<!-- write any routing code in the Flask application. -->
+
+</head>
+
+<body>
+
+<h3> {{session.control_point}} km BREVETN</h3>
+{% if session.index|length is not equalto 0 %}
+<p>
+    <table width="400" 
+        cellpadding="10">
+        <tr>
+            <td align=right>location</td>
+            <td align=right>checkpoint</td>
+            <td align=right>opentime</td>
+            <td align=right>closetime</td>
+        </tr>
+ {% for item in session.index | dictsort %}
+ <tr>
+     <td align=right>{{item[1].location}}</td> 
+     <td align=right>{{item[1].distance}} km</td>
+     <td align=right>{{item[1].opentime}}</td>
+     <td align=right>{{item[1].closetime}}</td>
+ </tr>
+ {% endfor %}
+ </table>
+
+</p>
+{% endif %}
+
+<p>Let's <a href="/index">do it again</a>.</p>
+
+</body> </html>

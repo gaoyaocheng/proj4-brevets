@@ -49,221 +49,184 @@
         {% endif %}
         {% endwith %}
 
-        <!-- Design on bootstrap grid -->
+        <!-- Design on bootstrap grid --
+        -->
         <form role="form">
 
             <spanclass="help-block">Start data and time</span>
             <div class="row">
                 <div class="col-xs-3">
-                    <input type="text" class="form-control" placeholder=".col-xs-3"
+                    <input type="text" class="form-control" 
                     name="start_date" value="start data e.g: 2016-10-24"/>
                 </div>
                 <div class="col-xs-3">
-                    <input type="text" class="form-control" placeholder=".col-xs-3"
+                    <input type="text" class="form-control" 
                     name="start_time" value="start time e.g: 08:00"/>
                 </div>
             </div>
 
-        <div class="input_row">
+
+            <label>control point in kilometers</label>
             <div class="row">
-                <div class="col-md-2">
-                    <input type="text" class="form-control"
-                    name="miles" value="Distance in miles"/>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control"
-                    name="location" value="location" />
-                </div>
-                <div class="col-md-4">
-                    <span class="times form-control">(times)</span>
+                <div class="col-xs-2">
+                    <select id = "control_point" class="form-control">
+                        <option>200</option>
+                        <option>300</option>
+                        <option>400</option>
+                        <option>600</option>
+                        <option>1000</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <input type="text" class="form-control"
-                    name="miles" value="Distance in miles"/>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control"
-                    name="location" value="location" />
-                </div>
-                <div class="col-md-4">
-                    <span class="times form-control">(times)</span>
-                </div>
+            <div id ="input_row"> </div>
+            <script>
+                $(document).ready(function(){
+                    for (var i = 0; i < 25; i++) {
+                        if (i == 0){
+                            var context = $(['<div class="row"> \
+                        <div class="col-md-2">\
+                            <input type="text" class="distance_row form-control"\
+                            name="kilometers" value="0" disabled/>\
+                        </div>\
+                        <div class="col-md-4">\
+                            <input type="text" class="location_name form-control"\
+                            name="location" value="location" />\
+                        </div>\
+                        <div class="col-md-4">\
+                            <span class="times form-control">(times)</span>\
+                        </div>\
+                    </div>'].join());
+                        }else{
+                            var context = $(['<div class="row"> \
+                        <div class="col-md-2">\
+                            <input type="text" class="distance_row form-control"\
+                            name="kilometers" value="Distance in kilometerss"/>\
+                        </div>\
+                        <div class="col-md-4">\
+                            <input type="text" class="location_name form-control"\
+                            name="location" value="location" />\
+                        </div>\
+                        <div class="col-md-4">\
+                            <span class="times form-control">(times)</span>\
+                        </div>\
+                    </div>'].join());
+                        }
+                        $("#input_row").append(context)
+                    }
+                })
+            </script>
+
+            <div class="col-md-6 text-center">
+
+                <input type="button" style = "width:150px;height:50" id = "showlist" value = "showlist"/>
             </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    <input type="text" class="form-control"
-                    name="miles" value="Distance in miles"/>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control"
-                    name="location" value="location" />
-                </div>
-                <div class="col-md-4">
-                    <span class="times form-control">(times)</span>
-                </div>
-            </div>
-        </form>
+            <script type="text/javascript">
 
-        <div class="row">
-            <div class="col-md-2">
-                <input type="text" class="form-control"
-                name="miles" value="Distance in miles"/>
-            </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control"
-                name="location" value="location" />
-            </div>
-            <div class="col-md-4">
-                <span class="times form-control">(times)</span>
-            </div>
-        </div>
-    </form>
+                $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 
-    <div class="row">
-        <div class="col-md-2">
-            <input type="text" class="form-control"
-            name="miles" value="Distance in miles"/>
-        </div>
-        <div class="col-md-4">
-            <input type="text" class="form-control"
-            name="location" value="location" />
-        </div>
-        <div class="col-md-4">
-            <span class="times form-control">(times)</span>
-        </div>
-    </div>
-</form>
+$(document).ready(function(){
 
-<div class="row">
-    <div class="col-md-2">
-        <input type="text" class="form-control"
-        name="miles" value="Distance in miles"/>
-    </div>
-    <div class="col-md-4">
-        <input type="text" class="form-control"
-        name="location" value="location" />
-    </div>
-    <div class="col-md-4">
-        <span class="times form-control">(times)</span>
-    </div>
-</div>
-</form>
+    $("#showlist").click(
+        function(){
+            $.getJSON($SCRIPT_ROOT + '/_checkcontrol',
+                {val:0},
+                function(data){
+                    res = data.result
+                    if (!res.is_valid){
+                        alert(res.msg);
+                    } else{
+                        window.location.href = '/showlist'
+                    }
+                })
+        }
+    )
+    $('input[name="kilometers"]').change(
+        function(){
+            var e_kilometers = $(this).val();
+            var target = $(this).parents(".row");
+            var e_index = $(this).parents(".row").index();
 
-<div class="row">
-    <div class="col-md-2">
-        <input type="text" class="form-control"
-        name="miles" value="Distance in miles"/>
-    </div>
-    <div class="col-md-4">
-        <input type="text" class="form-control"
-        name="location" value="location" />
-    </div>
-    <div class="col-md-4">
-        <span class="times form-control">(times)</span>
-    </div>
-</div>
-</form>
+            $.getJSON($SCRIPT_ROOT + '/_calc_times',
+                { kilometers: e_kilometers , index: e_index},
+                function(data) {
+                    res = data.result
+                    if (!res.is_valid) {
+                        if(e_kilometers != 0) 
+                            alert(res.msg);
+                        target.find(".distance_row").val("Distance in kilometers")
+                        target.find(".times").text("(times)")
+                    } else {
+                        var times = "open " + res.open_time + " close " + res.close_time;
+                        target.find(".times").text(times)
+                    }
+                });
+        });
 
-<div class="row">
-    <div class="col-md-2">
-        <input type="text" class="form-control"
-        name="miles" value="Distance in miles"/>
-    </div>
-    <div class="col-md-4">
-        <input type="text" class="form-control"
-        name="location" value="location" />
-    </div>
-    <div class="col-md-4">
-        <span class="times form-control">(times)</span>
-    </div>
-</div>
-</form>
+    $('input[name="location"]').change(
+        function(){
+            var e_location = $(this).val();
+            var target = $(this).parents(".row");
+            var e_index = $(this).parents(".row").index();
 
-<div class="row">
-    <div class="col-md-2">
-        <input type="text" class="form-control"
-        name="miles" value="Distance in miles"/>
-    </div>
-    <div class="col-md-4">
-        <input type="text" class="form-control"
-        name="location" value="location" />
-    </div>
-    <div class="col-md-4">
-        <span class="times form-control">(times)</span>
-    </div>
-</div>
-</form>
-
-<div class="row">
-    <div class="col-md-2">
-        <input type="text" class="form-control"
-        name="miles" value="Distance in miles"/>
-    </div>
-    <div class="col-md-4">
-        <input type="text" class="form-control"
-        name="location" value="location" />
-    </div>
-    <div class="col-md-4">
-        <span class="times form-control">(times)</span>
-    </div>
-</div>
-</form>
-</div>
-
-<script type="text/javascript">
-
-    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-
-  $(document).ready(function(){
-      // Do the following when the page is finished loading
-
-      // When a field named 'miles' is changed ...
-      $('input[name="miles"]').change(
-      // ... execute this function
-          function(){
-              var e_miles = $(this).val();
-
-              var target = $(this).parents(".row").find(".times");
-              var e_index = $(this).parents(".row").index();
-
-      // DEBUG: How do I replace the 'times' field?
-       alert("Content of the field I want to change: " +
-         target.html());
-
-      // AJAX request
-              $.getJSON($SCRIPT_ROOT + '/_calc_times',
-      // The object to pass to the server
-                  { miles: e_miles , index: e_index},
-      // The function to call with the response
-                  function(data) {
-                     var times = data.result;
-       alert("Got a response: " +  times);
-                    $('.times').eq(1).text(100)
-                     target.text(times);
-                  }); // End of the call to getJSON
-          });  // End of the function to be called when field changes
-
-      $('input[name="start_date"]').change(
-          function(){
-              var date = $(this).val();
-              $.getJSON($SCRIPT_ROOT + '/_set_startdate',
-              { time: date},
-              function(data) {
-              });
-          })
-      $('input[name="start_time"]').change(
-          function(){
-              var date = $(this).val();
-              $.getJSON($SCRIPT_ROOT + '/_set_starttime',
-              { time: date},
-              function(data) {
-              });
-          })
-     });   // end of what we do on document ready
+            $.getJSON($SCRIPT_ROOT + '/_location',
+                { val: e_location, index: e_index},
+                function(data) {
+                    res = data.result
+                    if (!res.is_valid){
+                        if(res.msg)
+                            alert(res.msg);
+                        target.find(".location_name").val("location")
+                    }
+                });
+        });
+    $('input[name="start_date"]').change(
+        function(){
+            var date = $(this).val();
+            $.getJSON($SCRIPT_ROOT + '/_startdate',
+                { time: date},
+                function(data) {
+                    res= data.result
+                    if (!res.is_valid) {
+                        alert("Date "+ date + 
+                            " is invalid! Plesae input correctly");
+                        $('input[name="start_date"]').val("");
+                    }
+                });
+        })
+    $('input[name="start_time"]').change(
+        function(){
+            var date = $(this).val();
+            $.getJSON($SCRIPT_ROOT + '/_starttime',
+                { time: date},
+                function(data) {
+                    res= data.result
+                    if (res.is_valid) {
+                        var times = "open " + res.open_time + " close " + res.close_time;
+                        $('.times').eq(0).text(times)
+                    } else {
+                        $('input[name="start_time"]').val("");
+                        if (res.msg)
+                            alert(res.msg);
+                        else
+                            alert("Time "+ date + " is invalid! Plesae input correctly");
+                    }
+                });
+        })
+    $("#control_point").change(
+        function() {
+            var point = $(this).val();
+            $.getJSON($SCRIPT_ROOT + '/_controlpoint',
+                { val: point},
+                function(data) {
+                    res= data.result
+                    if (!res.is_valid) {
+                        alert("control point "+ point + " is invalid! Plesae input correctly");
+                    }
+                });
+        })
+});   // end of what we do on document ready
 
 </script>
 
