@@ -7,6 +7,8 @@ That's "controle" with an 'e', because it's French, although "control" is also a
 a rider must obtain proof of passage, and control[e] times are the minimum and maximum times by which the rider must
 arrive at the location
 
+## Feature
+
 the speed table 
 control km minspeed maxspeed(km/hr)
 0 - 200    15       34
@@ -61,6 +63,7 @@ version by  YaoCheng Gao
 ## Status
 use ajax to send argument and get result from server when you set distance
 after you set all argument corrently, click showlist ,will get text list of you choose
+rules.py get the minutes calc from the BREVET rules 
 
 
 ## To run automated tests 
